@@ -17,6 +17,10 @@ cpFile() {
   cp networkWorker /usr/bin
   cp bdWorker /usr/bin
   cp bdWorker.py /usr/bin
+
+  chmod 755 /usr/bin/networkWorker
+  chmod 755 /usr/bin/bdworker
+  chmod 755 /usr/bin/bdWorker.py
 }
 
 addToAutostart() {
