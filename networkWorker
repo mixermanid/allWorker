@@ -1,5 +1,5 @@
 #!/bin/bash
-
+ 
 server="http://ihatemylife.tk/tellme.php"
 deviceName="number-1"
 getParam="?device_name=$deviceName"

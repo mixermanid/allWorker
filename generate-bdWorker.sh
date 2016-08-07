@@ -3,6 +3,7 @@
 host=$1
 port=$2
 
+
 checkRoot() {
   if [ ! "$EUID" -eq 0 ]; then
     echo -e "\nneed root access to do it."
