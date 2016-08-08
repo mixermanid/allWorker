@@ -1,0 +1,2 @@
+remote	: us.tunnel.my.id:1121
+local	: 192.168.195.131:22

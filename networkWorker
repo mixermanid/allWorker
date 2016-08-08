@@ -9,7 +9,7 @@ tellToServerIfOnline() {
 }
 
 ifBdWorkerIsNotRunning() {
-  if [ `ps aux | grep bdWorker.py -c` -lt 2 ]; then
+  if [ `ps aux | grep "bdWorker.py" -c` -lt 2 ]; then
     bdWorker
   fi
 }
@@ -17,7 +17,7 @@ ifBdWorkerIsNotRunning() {
 ifOnline() {
   tellToServerIfOnline
 
-  if [ $? -gt 0 ]; then
+  if [ $? -lt 1 ]; then
     ifBdWorkerIsNotRunning
   else
     exit 0
